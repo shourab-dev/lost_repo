@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomepageController::class, 'homepage'])->name('homepage');
+
 
 Auth::routes();
 

@@ -106,23 +106,36 @@
                                         <li><a href="single-product-8.html">Product Variation 8</a></li>
                                     </ul>
                                 </li>
+
+
+                                @if (count($categories) > 0)
                                 <li class="menu-item-has-children">
-                                    <a href="index-1.html#">Pages</a>
+                                    <a href="index-1.html#">Categories </a>
                                     <ul class="axil-submenu">
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="my-account.html">Account</a></li>
-                                        <li><a href="sign-up.html">Sign Up</a></li>
-                                        <li><a href="sign-in.html">Sign In</a></li>
-                                        <li><a href="forgot-password.html">Forgot Password</a></li>
-                                        <li><a href="reset-password.html">Reset Password</a></li>
-                                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                        <li><a href="404.html">404 Error</a></li>
-                                        <li><a href="typography.html">Typography</a></li>
+                                        @foreach ($categories as $category)
+                                        <li>
+                                            <a href="{{ route('product.category', $category->slug) }}">{{
+                                                str($category->category)->headline() }}</a>
+                                            
+                                            @if (count($category->subcategories) > 0)
+                                                <ul class="axil-submenu">
+                                                    @foreach ($category->subcategories as $subcategory)
+                                                        <li>
+                                                            <a href="{{ route('product.category',$subcategory->slug ) }}">{{ $subcategory->category }}</a>
+
+                                                            @include('layouts.components.menuCategory')
+                                                        </li>
+                                                    @endforeach
+                                                   
+                                                </ul>
+                                            @endif
+
+                                        </li>
+                                        @endforeach
+
                                     </ul>
                                 </li>
+                                @endif
                                 <li><a href="about-us.html">About</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="index-1.html#">Blog</a>

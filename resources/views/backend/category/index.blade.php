@@ -87,7 +87,9 @@
                     @forelse ($parentCategories as $key => $category)
                     <tr>
                         <td align="center">{{ $categorys->firstItem() + $key }}</td>
-                        <td><img width="80px" src="{{ asset('storage/'.$category->icon) }}" alt="{{ $category->category }}"> {{ $category->category }}</td>
+                        <td>
+                            <img width="80px" src="{{ asset('storage/'.$category->icon) }}" alt="{{ $category->category }}">
+                             {{ $category->category }}</td>
                         <td>{{ $category->category_slug }}</td>
                         <td>
                             <div class="btn-group">

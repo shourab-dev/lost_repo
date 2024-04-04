@@ -21,6 +21,7 @@ class ProductController extends Controller
     }
     function storeProduct(Request $request, $id = null)
     {
+        
 
         $request->validate([
             'galleries.*' => 'mimes:png,jpg'

@@ -87,7 +87,8 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="input-style-2">
-                            <textarea name="long_detail" placeholder="Long Detail"></textarea>
+                            <textarea name="long_detail" id="longDetail" placeholder="Long Detail"></textarea>
+
 
                             @error('long_detail')
                             <span class="text-danger">{{ $message }}</span>
@@ -126,9 +127,9 @@
                         <label>Category</label>
 
                         <select style="width: 100%" multiple name="categories[]" class="categoryItems">
-                           @foreach ($categories as $category)
-                               <option value="{{ $category->id }}">{{ str($category->category)->headline() }}</option>
-                           @endforeach
+                            @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ str($category->category)->headline() }}</option>
+                            @endforeach
                         </select>
 
                     </div>
@@ -142,7 +143,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
-    .select2 span{
+    .select2 span {
         display: block !important;
     }
 </style>
@@ -150,7 +151,15 @@
 @endpush
 @push('customJs')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#longDetail' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 <script>
     $(document).ready(function() {
     $('.categoryItems').select2();
