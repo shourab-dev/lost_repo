@@ -13,21 +13,26 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-       $testData = new Category();
-       $testData->category = 'mobile';
-       $testData->category_slug = 'mobile';
-       $testData->save();
-       $testData = new Category();
-       $testData->category = 'mobile 1';
-       $testData->category_slug = 'mobile-1';
-       $testData->save();
-       $testData = new Category();
-       $testData->category = 'mobile2';
-       $testData->category_slug = 'mobile-2';
-       $testData->save();
-       $testData = new Category();
-       $testData->category = 'mobile 3';
-       $testData->category_slug = 'mobile-3';
-       $testData->save();
+        $categories = [
+            [
+                'category' => "furniture",
+                'slug' => "furniture",
+                'icon' => 'demo/product/categories/furni-2.png',
+            ],
+            [
+                'category' => "jewelry",
+                'slug' => "jewelry",
+                'icon' => 'demo/product/categories/jewelry-3.png',
+            ],
+            [
+                'category' => "Electornics",
+                'slug' => "electronics",
+                'icon' => 'demo/product/categories/elec-5.png',
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
