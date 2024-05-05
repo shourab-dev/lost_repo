@@ -169,7 +169,7 @@
                             </li>
                             <li class="shopping-cart">
                                 <a href="index-1.html#" class="cart-dropdown-btn">
-                                    <span class="cart-count">3</span>
+                                    <span class="cart-count">{{ $cartCount ?? 0 }}</span>
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
@@ -702,7 +702,7 @@
                     <span class="subtotal-amount">$610.00</span>
                 </h3>
                 <div class="group-btn">
-                    <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
+                    <a href="{{ route('cart.view') }}" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
                     <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
                 </div>
             </div>
@@ -748,6 +748,7 @@
     <script src="{{ asset('frontend/assets/js/vendor/counterup.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/vendor/waypoints.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+
     <script>
 
         $('#productSearch').keyup(function(){
@@ -817,6 +818,9 @@
         })
 
     </script>
+
+    @stack('customJs')
+
 </body>
 
 </html>

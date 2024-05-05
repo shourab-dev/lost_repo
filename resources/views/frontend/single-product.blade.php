@@ -52,16 +52,16 @@
                                         <img src="{{ asset('storage/'. $product->featured_img) }}" alt="thumb image">
                                     </div>
                                     @endif
-                                    
+
                                     @if ($product->galleries && count($product->galleries) > 0)
                                     @foreach ($product->galleries as $image)
                                     <div class="small-thumb-img">
                                         <img src="{{ asset('storage/'.$image->title) }}" alt="thumb image">
                                     </div>
-                                    
+
                                     @endforeach
                                     @endif
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -76,29 +76,29 @@
                                 @else
                                 <span class="price-amount">{{ $product->price }}tk</span>
                                 @endif
-                                    @php
-                                    $rating = $product->reviews->avg('rating');
-                                    @endphp
+                                @php
+                                $rating = $product->reviews->avg('rating');
+                                @endphp
                                 <div class="product-rating">
                                     <div class="position-relative">
                                         <div class="star-rating position-absolute">
-                                            @while ($rating  > 0 )
-                                                
+                                            @while ($rating > 0 )
+
                                             @if ($rating > 0.5)
                                             <i class="fas fa-star"></i>
-                                            @else 
-                                            
+                                            @else
+
                                             <i class="fas fa-star-half"></i>
-                                                
+
                                             @endif
 
                                             @php
-                                                $rating--
+                                            $rating--
                                             @endphp
                                             @endwhile
-                                           
+
                                         </div>
-                                       
+
                                         <div class="star-rating">
                                             @foreach (range(1,5) as $i)
                                             <i class="far fa-star"></i>
@@ -106,13 +106,15 @@
                                         </div>
                                     </div>
                                     <div class="review-link">
-                                        
-                                        <a href="single-product-3.html#">(<span>{{ count($product->reviews) > 0 ? count($product->reviews) : 0 }} </span> customer reviews)</a>
+
+                                        <a href="single-product-3.html#">(<span>{{ count($product->reviews) > 0 ?
+                                                count($product->reviews) : 0 }} </span> customer reviews)</a>
                                     </div>
                                 </div>
                                 <ul class="product-meta">
 
-                                    <li class="{{ $product->stock ? "" : " text-danger" }}"><i class="fal fa-check"></i>
+                                    <li class="{{ $product->stock ? 'text-primary' : ' text-danger' }}">
+                                        {!! $product->stock ? '<i class="fal fa-check"></i>' : '❌' !!}
                                         {{ $product->stock ? "In Stock" : "Out of Stock" }}</li>
                                     <li><i class="fal fa-check"></i>Free delivery available</li>
                                     <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
@@ -124,21 +126,30 @@
 
 
                                 <!-- Start Product Action Wrapper  -->
-                                <div class="product-action-wrapper d-flex-center">
-                                    <!-- Start Quentity Action  -->
-                                    <div class="pro-qty"><input type="text" value="1"></div>
-                                    <!-- End Quentity Action  -->
+                                @if ($product->stock)
 
-                                    <!-- Start Product Action  -->
-                                    <ul class="product-action d-flex-center mb--0">
-                                        <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add
-                                                to Cart</a></li>
-                                        <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i
-                                                    class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <!-- End Product Action  -->
 
-                                </div>
+                                <form action="{{ route('cart.store') }}" method="POST">
+                                    @csrf
+                                    <div class="product-action-wrapper d-flex-center">
+                                        <!-- Start Quentity Action  -->
+                                        <div class="pro-qty"><input type="text" value="1" min="1" name="qty"></div>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <!-- End Quentity Action  -->
+                                        <!-- Start Product Action  -->
+                                        <ul class="product-action d-flex-center mb--0">
+                                            <li class="add-to-cart">
+                                                <button style="width: fit-content;display:inline-block"
+                                                    class="axil-btn btn-bg-primary">Add
+                                                    to Cart</button>
+                                            </li>
+                                            <li class="wishlist"><a href="wishlist.html"
+                                                    class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <!-- End Product Action  -->
+                                    </div>
+                                </form>
+                                @endif
                                 <!-- End Product Action Wrapper  -->
                             </div>
                         </div>
@@ -236,22 +247,22 @@
                                         <h5 class="title">{{ count($product->reviews) }} Review for this product</h5>
                                         <ul class="comment-list">
                                             @foreach ($product->reviews as $review)
-                                                
-                                            
+
+
                                             <!-- Start Single Comment  -->
                                             <li class="comment">
                                                 <div class="comment-body">
                                                     <div class="single-comment">
                                                         <div class="comment-img">
-                                                            <img src="{{ getProfileImage() }}"
-                                                                alt="Author Images">
+                                                            <img src="{{ getProfileImage() }}" alt="Author Images">
                                                         </div>
                                                         <div class="comment-inner">
                                                             <h6 class="commenter">
                                                                 <a class="hover-flip-item-wrapper"
                                                                     href="single-product-3.html#">
                                                                     <span class="hover-flip-item">
-                                                                        <span data-text="Cameron Williamson">{{ $review->user->name }}</span>
+                                                                        <span data-text="Cameron Williamson">{{
+                                                                            $review->user->name }}</span>
                                                                     </span>
                                                                 </a>
                                                                 <span class="commenter-rating ratiing-four-star">
