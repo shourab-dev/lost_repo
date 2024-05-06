@@ -73,7 +73,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="nav-dashboard" role="tabpanel">
                                 <div class="axil-dashboard-overview">
-                                    <div class="welcome-text">Hello Annie (not <span>Annie?</span> <a
+                                    <div class="welcome-text">Hello {{ auth('customer')->user()->name }} (not <span>{{ auth('customer')->user()->name }}?</span> <a
                                             href="{{ route('signout') }}">Log Out</a>)</div>
                                     <p>From your account dashboard you can view your recent orders, manage your shipping
                                         and billing addresses, and edit your password and account details.</p>
@@ -86,53 +86,34 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Order</th>
-                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Detail</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Total</th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">#6523</th>
-                                                    <td>September 10, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$326.63 for 3 items</td>
-                                                    <td><a href="my-account.html#" class="axil-btn view-btn">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">#6523</th>
-                                                    <td>September 10, 2020</td>
-                                                    <td>On Hold</td>
-                                                    <td>$326.63 for 3 items</td>
-                                                    <td><a href="my-account.html#" class="axil-btn view-btn">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">#6523</th>
-                                                    <td>September 10, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$326.63 for 3 items</td>
-                                                    <td><a href="my-account.html#" class="axil-btn view-btn">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">#6523</th>
-                                                    <td>September 10, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$326.63 for 3 items</td>
-                                                    <td><a href="my-account.html#" class="axil-btn view-btn">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">#6523</th>
-                                                    <td>September 10, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$326.63 for 3 items</td>
-                                                    <td><a href="my-account.html#" class="axil-btn view-btn">View</a>
-                                                    </td>
-                                                </tr>
+                                                @forelse ($orders as $order)
+                                                    <tr>
+                                                        <th scope="row">#{{ $order->transaction_id }}</th>
+                                                        <td>
+                                                            @foreach ($order->orderItems as $item)
+                                                                <div>
+                                                                    <b>{{ $item->product->title }} <sub>({{ $item->amount / $item->qty }} * {{ $item->qty }})</sub></b> <br>
+                                                                </div>
+                                                                @endforeach
+                                                                <p>{{ $order->created_at->format('d M, Y') }}</p>
+                                                        </td>
+                                                        <td>{{ $order->status }}</td>
+                                                        <td>{{ $order->total_amount }} tk for {{ $order->total_qty }} items</td>
+                                                        <td><a href="{{ route('invoice.download', $order->id) }}" class="axil-btn view-btn">Download</a>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <h5>No order found!</h5>
+                                                @endforelse
+                                              
+                                              
                                             </tbody>
                                         </table>
                                     </div>
